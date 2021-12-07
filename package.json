@@ -1,20 +1,20 @@
 {
-  "name": "dwv",
-  "version": "0.30.0-beta",
-  "description": "DICOM Web Viewer.",
+  "name": "dwv-us",
+  "version": "1.0.5",
+  "description": "US DICOM Web Viewer.",
   "keywords": [
     "DICOM",
     "medical",
     "imaging"
   ],
   "license": "GPL-3.0",
-  "author": "ivmartel <ivmartel@gmail.com>",
-  "homepage": "https://ivmartel.github.io/dwv/",
+  "author": "us",
+  "homepage": "https://github.com/qp-design/dwv-us.git",
   "repository": {
     "type": "git",
-    "url": "git://github.com/ivmartel/dwv.git"
+    "url": "git@github.com:qp-design/dwv-us.git"
   },
-  "main": "dist/dwv.min.js",
+  "main": "dist/dwv-us.min.js",
   "dependencies": {
     "i18next": "~20.1.0",
     "i18next-browser-languagedetector": "~6.0.1",

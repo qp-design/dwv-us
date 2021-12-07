@@ -38,7 +38,12 @@ dwv.image.ImageFactory.prototype.create = function (
   var pixelSpacing = dicomElements.getFromKey('x00280030');
   // ImagerPixelSpacing
   var imagerPixelSpacing = dicomElements.getFromKey('x00181164');
-  if (pixelSpacing && pixelSpacing[0] && pixelSpacing[1]) {
+  // US PixelSpacing
+  var usPixelSpacing = dicomElements.getFromKey('x00186011');
+  if (usPixelSpacing) {
+    rowSpacing = parseFloat(usPixelSpacing['x0018602C'].value[0]);
+    columnSpacing = parseFloat(usPixelSpacing['x0018602E'].value[0]);
+  } else if (pixelSpacing && pixelSpacing[0] && pixelSpacing[1]) {
     rowSpacing = parseFloat(pixelSpacing[0]);
     columnSpacing = parseFloat(pixelSpacing[1]);
   } else if (imagerPixelSpacing &&

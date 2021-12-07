@@ -715,40 +715,40 @@ dwv.tool.Draw = function (app) {
     // double click handling: update label
     shapeGroup.on('dblclick', function () {
       // get the label object for this shape
-      var label = this.findOne('Label');
-      // should just be one
-      if (typeof label === 'undefined') {
-        throw new Error('Could not find the shape label.');
-      }
-      var ktext = label.getText();
-
-      var onSaveCallback = function (meta) {
-        // store meta
-        ktext.meta = meta;
-        // update text expression
-        ktext.setText(dwv.utils.replaceFlags(
-          ktext.meta.textExpr, ktext.meta.quantification));
-        label.setVisible(ktext.meta.textExpr.length !== 0);
-
-        // trigger event
-        fireEvent({
-          type: 'drawchange'
-        });
-        // draw
-        konvaLayer.draw();
-      };
-
-      // call client dialog if defined
-      if (typeof dwv.gui.openRoiDialog !== 'undefined') {
-        dwv.gui.openRoiDialog(ktext.meta, onSaveCallback);
-      } else {
-        // simple prompt for the text expression
-        var textExpr = prompt('Label', ktext.meta.textExpr);
-        if (textExpr !== null) {
-          ktext.meta.textExpr = textExpr;
-          onSaveCallback(ktext.meta);
-        }
-      }
+      // var label = this.findOne('Label');
+      // // should just be one
+      // if (typeof label === 'undefined') {
+      //   throw new Error('Could not find the shape label.');
+      // }
+      // var ktext = label.getText();
+      //
+      // var onSaveCallback = function (meta) {
+      //   // store meta
+      //   ktext.meta = meta;
+      //   // update text expression
+      //   ktext.setText(dwv.utils.replaceFlags(
+      //     ktext.meta.textExpr, ktext.meta.quantification));
+      //   label.setVisible(ktext.meta.textExpr.length !== 0);
+      //
+      //   // trigger event
+      //   fireEvent({
+      //     type: 'drawchange'
+      //   });
+      //   // draw
+      //   konvaLayer.draw();
+      // };
+      //
+      // // call client dialog if defined
+      // if (typeof dwv.gui.openRoiDialog !== 'undefined') {
+      //   dwv.gui.openRoiDialog(ktext.meta, onSaveCallback);
+      // } else {
+      //   // simple prompt for the text expression
+      //   var textExpr = prompt('Label', ktext.meta.textExpr);
+      //   if (textExpr !== null) {
+      //     ktext.meta.textExpr = textExpr;
+      //     onSaveCallback(ktext.meta);
+      //   }
+      // }
     });
   };
 
