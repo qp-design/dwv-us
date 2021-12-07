@@ -1,4 +1,4 @@
-/*! dwv 0.29.1 2021-06-11 17:43:54 */
+/*! dwv-us 1.0.5 2021-12-07 17:21:07 */
 // Inspired from umdjs
 // See https://github.com/umdjs/umd/blob/master/templates/returnExports.js
 (function (root, factory) {
@@ -4292,7 +4292,7 @@ dwv.dicom = dwv.dicom || {};
  * @returns {string} The version of the library.
  */
 dwv.getVersion = function () {
-  return '0.29.1';
+  return '0.30.0-beta';
 };
 
 /**
@@ -14924,7 +14924,12 @@ dwv.image.ImageFactory.prototype.create = function (
   var pixelSpacing = dicomElements.getFromKey('x00280030');
   // ImagerPixelSpacing
   var imagerPixelSpacing = dicomElements.getFromKey('x00181164');
-  if (pixelSpacing && pixelSpacing[0] && pixelSpacing[1]) {
+  // US PixelSpacing
+  var usPixelSpacing = dicomElements.getFromKey('x00186011');
+  if (usPixelSpacing) {
+    rowSpacing = parseFloat(usPixelSpacing['x0018602C'].value[0]);
+    columnSpacing = parseFloat(usPixelSpacing['x0018602E'].value[0]);
+  } else if (pixelSpacing && pixelSpacing[0] && pixelSpacing[1]) {
     rowSpacing = parseFloat(pixelSpacing[0]);
     columnSpacing = parseFloat(pixelSpacing[1]);
   } else if (imagerPixelSpacing &&
@@ -23245,40 +23250,40 @@ dwv.tool.Draw = function (app) {
     // double click handling: update label
     shapeGroup.on('dblclick', function () {
       // get the label object for this shape
-      var label = this.findOne('Label');
-      // should just be one
-      if (typeof label === 'undefined') {
-        throw new Error('Could not find the shape label.');
-      }
-      var ktext = label.getText();
-
-      var onSaveCallback = function (meta) {
-        // store meta
-        ktext.meta = meta;
-        // update text expression
-        ktext.setText(dwv.utils.replaceFlags(
-          ktext.meta.textExpr, ktext.meta.quantification));
-        label.setVisible(ktext.meta.textExpr.length !== 0);
-
-        // trigger event
-        fireEvent({
-          type: 'drawchange'
-        });
-        // draw
-        konvaLayer.draw();
-      };
-
-      // call client dialog if defined
-      if (typeof dwv.gui.openRoiDialog !== 'undefined') {
-        dwv.gui.openRoiDialog(ktext.meta, onSaveCallback);
-      } else {
-        // simple prompt for the text expression
-        var textExpr = prompt('Label', ktext.meta.textExpr);
-        if (textExpr !== null) {
-          ktext.meta.textExpr = textExpr;
-          onSaveCallback(ktext.meta);
-        }
-      }
+      // var label = this.findOne('Label');
+      // // should just be one
+      // if (typeof label === 'undefined') {
+      //   throw new Error('Could not find the shape label.');
+      // }
+      // var ktext = label.getText();
+      //
+      // var onSaveCallback = function (meta) {
+      //   // store meta
+      //   ktext.meta = meta;
+      //   // update text expression
+      //   ktext.setText(dwv.utils.replaceFlags(
+      //     ktext.meta.textExpr, ktext.meta.quantification));
+      //   label.setVisible(ktext.meta.textExpr.length !== 0);
+      //
+      //   // trigger event
+      //   fireEvent({
+      //     type: 'drawchange'
+      //   });
+      //   // draw
+      //   konvaLayer.draw();
+      // };
+      //
+      // // call client dialog if defined
+      // if (typeof dwv.gui.openRoiDialog !== 'undefined') {
+      //   dwv.gui.openRoiDialog(ktext.meta, onSaveCallback);
+      // } else {
+      //   // simple prompt for the text expression
+      //   var textExpr = prompt('Label', ktext.meta.textExpr);
+      //   if (textExpr !== null) {
+      //     ktext.meta.textExpr = textExpr;
+      //     onSaveCallback(ktext.meta);
+      //   }
+      // }
     });
   };
 
