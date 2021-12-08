@@ -41,8 +41,9 @@ dwv.image.ImageFactory.prototype.create = function (
   // US PixelSpacing
   var usPixelSpacing = dicomElements.getFromKey('x00186011');
   if (usPixelSpacing) {
-    rowSpacing = parseFloat(usPixelSpacing['x0018602C'].value[0]);
-    columnSpacing = parseFloat(usPixelSpacing['x0018602E'].value[0]);
+    const usPixelSpacingArray = usPixelSpacing instanceof Array ? usPixelSpacing[0] : usPixelSpacing;
+    rowSpacing = parseFloat(usPixelSpacingArray['x0018602C'].value[0]);
+    columnSpacing = parseFloat(usPixelSpacingArray['x0018602E'].value[0]);
   } else if (pixelSpacing && pixelSpacing[0] && pixelSpacing[1]) {
     rowSpacing = parseFloat(pixelSpacing[0]);
     columnSpacing = parseFloat(pixelSpacing[1]);
