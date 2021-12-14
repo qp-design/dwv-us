@@ -163,7 +163,7 @@ dwv.tool.Scroll = function (app) {
    * @param {object} event The mouse wheel event.
    */
   this.wheel = function (event) {
-    if (event.deltaY < 0) {
+    if (event.deltaY > 0) {
       mouseScroll(true);
     } else {
       mouseScroll(false);
