@@ -1,6 +1,6 @@
 {
-  "name": "dwv-us",
-  "version": "1.1.1",
+  "name": "dwv-sz",
+  "version": "1.0.0",
   "description": "US DICOM Web Viewer.",
   "keywords": [
     "DICOM",
@@ -14,7 +14,7 @@
     "type": "git",
     "url": "git@github.com:qp-design/dwv-us.git"
   },
-  "main": "dist/dwv-us.min.js",
+  "main": "dist/dwv-sz.min.js",
   "dependencies": {
     "i18next": "~20.1.0",
     "i18next-browser-languagedetector": "~6.0.1",

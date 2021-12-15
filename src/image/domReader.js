@@ -38,11 +38,13 @@ dwv.image.getDefaultImage = function (
   width, height, sliceIndex,
   imageBuffer, numberOfFrames,
   imageUid) {
+  //默认像素比
+  const devicePixelRatio = dwv.devicePixelRatio;
   // image size
   var imageSize = new dwv.image.Size(width, height);
   // default spacing
   // TODO: misleading...
-  var imageSpacing = new dwv.image.Spacing(1, 1);
+  var imageSpacing = new dwv.image.Spacing(devicePixelRatio, devicePixelRatio);
   // default origin
   var origin = new dwv.math.Point3D(0, 0, sliceIndex);
   // create image

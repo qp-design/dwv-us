@@ -303,6 +303,11 @@ dwv.io.UrlsLoader = function () {
       throw new Error('No loader found for url: ' + dataElement);
     }
 
+    dwv.devicePixelRatio = 1;
+    if(typeof options !== 'undefined') {
+      dwv.devicePixelRatio = options.devicePixelRatio;
+    }
+    
     var getLoadHandler = function (loader, dataElement, i) {
       return function (event) {
         // check response status
