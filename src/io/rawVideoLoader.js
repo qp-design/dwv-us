@@ -63,7 +63,7 @@ dwv.io.RawVideoLoader = function () {
     var video = document.createElement('video');
     if (typeof origin === 'string') {
       // url case
-      var ext = origin.split('.').pop().toLowerCase();
+      var ext = dwv.ext || origin.split('.').pop().toLowerCase();
       video.src = createDataUri(buffer, ext);
     } else {
       video.src = buffer;

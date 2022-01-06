@@ -1,7 +1,7 @@
 # ignore source folders
 /src
 /tests
-
+.idea
 # ignore resources
 /resources
 

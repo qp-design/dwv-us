@@ -306,6 +306,7 @@ dwv.io.UrlsLoader = function () {
     dwv.devicePixelRatio = 1;
     if(typeof options !== 'undefined') {
       dwv.devicePixelRatio = options.devicePixelRatio;
+      dwv.ext = options.ext;
     }
     
     var getLoadHandler = function (loader, dataElement, i) {
