@@ -119,7 +119,7 @@ dwv.utils.replaceFlags = function (inputStr, values) {
     if (valueObj !== null && typeof valueObj !== 'undefined' &&
       valueObj.value !== null && typeof valueObj.value !== 'undefined') {
       // value string
-      var valueStr = valueObj.value.toPrecision(4);
+      var valueStr = Math.floor(valueObj.value * 100) / 100;
       // add unit if available
       // space or no space? Yes apart from degree...
       // check: https://en.wikipedia.org/wiki/Space_(punctuation)#Spaces_and_unit_symbols

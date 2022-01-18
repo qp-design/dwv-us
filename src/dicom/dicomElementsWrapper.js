@@ -245,7 +245,7 @@ dwv.dicom.DicomElementsWrapper.prototype.getElementValueAsString = function (
         }
         var num = Number(val);
         if (!isInteger(num) && pretty) {
-          valueStr += num.toPrecision(4);
+          valueStr += Math.floor(num * 100) / 100;
         } else {
           valueStr += num.toString();
         }
