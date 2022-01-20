@@ -130,7 +130,7 @@ dwv.image.getViewFromDOMVideo = function (
   var height = video.videoHeight;
 
   // default frame rate...
-  var frameRate = 30;
+  var frameRate = dwv.frameRate || 8;
   // number of frames
   var numberOfFrames = Math.floor(video.duration * frameRate);
 
