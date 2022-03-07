@@ -433,6 +433,11 @@ dwv.App = function () {
    * @param {number} cy The zoom center Y coordinate.
    */
   this.zoom = function (step, cx, cy) {
+    // 最大放大3倍
+    if(layerController.getScale().x > 3 * layerController.getBaseScale().x && step > 0) {
+      return
+    }
+
     layerController.addScale(step, {x: cx, y: cy});
     layerController.draw();
   };

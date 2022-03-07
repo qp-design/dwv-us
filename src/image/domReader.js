@@ -37,9 +37,12 @@ dwv.image.imageDataToBuffer = function (imageData) {
 dwv.image.getDefaultImage = function (
   width, height, sliceIndex,
   imageBuffer, numberOfFrames,
-  imageUid) {
+  imageUid, name) {
   //默认像素比
-  const devicePixelRatio = dwv.devicePixelRatio;
+  let devicePixelRatio = dwv.devicePixelRatio;
+  if(name) {
+    devicePixelRatio = dwv[name].devicePixelRatio;
+  }
   // image size
   var imageSize = new dwv.image.Size(width, height);
   // default spacing
@@ -99,7 +102,7 @@ dwv.image.getViewFromDOMImage = function (domImage, origin) {
   // create view
   var imageBuffer = dwv.image.imageDataToBuffer(imageData);
   var image = dwv.image.getDefaultImage(
-    width, height, sliceIndex, [imageBuffer], 1, sliceIndex);
+    width, height, sliceIndex, [imageBuffer], 1, sliceIndex, domImage.origin);
 
   // return
   return {
@@ -159,10 +162,26 @@ dwv.image.getViewFromDOMVideo = function (
   // video image
   var image = null;
 
+  var imagesList = [];
+
+  function tranferData(data) {
+    return new Promise((resolve, reject) => {
+      const channel = new MessageChannel();
+      const port1 = channel.port1;
+      const port2 = channel.port2;
+
+      port2.postMessage(data);
+
+      port1.onmessage = function (event) {
+        const imgBuffer = dwv.image.imageDataToBuffer(event.data)
+        resolve(imgBuffer);
+      }
+    })
+  }
   /**
    * Draw the context and store it as a frame
    */
-  function storeFrame() {
+  async function storeFrame() {
     // send progress
     onprogress({
       lengthComputable: true,
@@ -173,10 +192,14 @@ dwv.image.getViewFromDOMVideo = function (
     });
     // draw image
     ctx.drawImage(video, 0, 0);
-    // context to image buffer
-    var imgBuffer = dwv.image.imageDataToBuffer(
-      ctx.getImageData(0, 0, width, height));
+
+    // 获取未转化前数据
+    const needTransfer = ctx.getImageData(0, 0, width, height);
+
     if (frameIndex === 0) {
+      // context to image buffer
+      var imgBuffer = dwv.image.imageDataToBuffer(needTransfer);
+
       // create view
       image = dwv.image.getDefaultImage(
         width, height, 1, [imgBuffer], numberOfFrames, dataIndex);
@@ -189,7 +212,12 @@ dwv.image.getViewFromDOMVideo = function (
         source: origin
       });
     } else {
-      image.appendFrameBuffer(imgBuffer);
+      imagesList.push(tranferData(needTransfer))
+
+      if(frameIndex === numberOfFrames) {
+        const dataImages = await Promise.all(imagesList);
+        dataImages.forEach(imgBuffer => image.appendFrameBuffer(imgBuffer))
+      }
     }
     // increment index
     ++frameIndex;

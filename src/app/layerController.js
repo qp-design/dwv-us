@@ -310,15 +310,15 @@ dwv.LayerController = function (containerDiv) {
   };
 
   /**
-   * Add scale to the layers. Scale cannot go lower than 0.1.
+   * Add scale to the layers. Scale cannot go lower than 0.05.
    *
    * @param {object} scaleStep The scale to add.
    * @param {object} center The scale center point as {x,y}.
    */
   this.addScale = function (scaleStep, center) {
     var newScale = {
-      x: Math.max(scale.x + scaleStep, 0.1),
-      y: Math.max(scale.y + scaleStep, 0.1)
+      x: Math.max(scale.x + scaleStep, 0.05),
+      y: Math.max(scale.y + scaleStep, 0.05)
     };
     // center should stay the same:
     // newOffset + center / newScale = oldOffset + center / oldScale

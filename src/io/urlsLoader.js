@@ -303,13 +303,6 @@ dwv.io.UrlsLoader = function () {
       throw new Error('No loader found for url: ' + dataElement);
     }
 
-    dwv.devicePixelRatio = 1;
-    if(typeof options !== 'undefined') {
-      dwv.devicePixelRatio = options.devicePixelRatio;
-      dwv.frameRate = options.frameRate;
-      dwv.ext = options.ext;
-    }
-
     var getLoadHandler = function (loader, dataElement, i) {
       return function (event) {
         // check response status
@@ -361,6 +354,13 @@ dwv.io.UrlsLoader = function () {
 
       // request options
       if (typeof options !== 'undefined') {
+        dwv.devicePixelRatio = 1;
+        if(typeof options !== 'undefined') {
+          dwv[data] = options.devicePixelRatio
+          dwv.frameRate = options.frameRate;
+          dwv.ext = options.ext;
+        }
+
         // optional request headers
         if (typeof options.requestHeaders !== 'undefined') {
           var requestHeaders = options.requestHeaders;
